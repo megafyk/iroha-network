@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  iroha-node0:
+    image: hyperledger/iroha:develop
+    container_name: iroha_node0
+    ports:
+      - "50051:50051"
+      - "20000:20000"
+      - "10001:10001"
+    environment:
+      - IROHA_POSTGRES_HOST=iroha_pg0
+      - IROHA_POSTGRES_PORT=5432
+      - IROHA_POSTGRES_USER=postgres
+      - IROHA_POSTGRES_PASSWORD=helloworld
+      - CCACHE_DIR=/tmp/ccache
+    depends_on:
+      - iroha_pg0
+    entrypoint: ["irohad", "--genesis_block", "/opt/iroha/genesis.block", "--config", "/opt/iroha/config0.sample", "--keypair_name", "node0"]
+    volumes:
+      - ./:/opt/iroha
+      - blockstore0:/tmp/block_store
+      - ccache-data:/tmp/ccache
+    working_dir: /opt/iroha
+    cap_add:
+      - SYS_PTRACE
+
+  iroha_pg0:
+    image: postgres:9.5
+    container_name: iroha_pg0
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - IROHA_POSTGRES_PASSWORD=helloworld
+networks: 
+  iroha-network:
+volumes:
+  ccache-data:
+  blockstore0:
