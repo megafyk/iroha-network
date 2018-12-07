@@ -1,4 +1,4 @@
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
-docker volume rm $(docker volume ls)
+docker stop $(docker ps -aq) <br/>
+docker rm $(docker ps -aq) <br/>
+docker volume rm $(docker volume ls) <br/>
 docker network prune

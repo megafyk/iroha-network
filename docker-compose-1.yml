@@ -1,13 +1,13 @@
-version: '3'
+version: '3.5'
 
 services:
   iroha-node1:
     image: hyperledger/iroha:develop
-    container_name: iroha_node0
+    container_name: iroha_node1
     ports:
-      - "50051:50051"
-      - "20000:20000"
-      - "10001:10001"
+      - "50052:50051"
+      - "20001:20000"
+      - "10002:10001"
     environment:
       - IROHA_POSTGRES_HOST=iroha_pg1
       - IROHA_POSTGRES_PORT=5432
@@ -29,12 +29,13 @@ services:
     image: postgres:9.5
     container_name: iroha_pg1
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_USER=postgres
       - IROHA_POSTGRES_PASSWORD=helloworld
 networks: 
   iroha-network:
+    name: iroha-network
 volumes:
   ccache-data:
   blockstore1:
